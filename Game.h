@@ -8,7 +8,7 @@
 class Game : public Engine {
 private:
 public:
-	Game() : Engine(50, 50, 8) {
+	Game() : Engine(50, 30, 8) {
 
 	}
 	void OnGameStarted() override {
