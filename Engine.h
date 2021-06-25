@@ -178,14 +178,6 @@ protected:
 	void SetSymbol(int x, int y, CHAR_INFO symbol) {
 		m_screen[x + y * m_screenWidth] = symbol;
 	}
-
-	void FillRect(int minX, int minY, int width, int height, CHAR_INFO symbol) {
-		for (int y = minY; y < minY + height; y++) {	
-			for (int x = minX; x < minX + width; x++) {
-				SetSymbol(x, y, symbol);
-			}
-		}
-	}
 };
 
 #endif ENGINE_H
