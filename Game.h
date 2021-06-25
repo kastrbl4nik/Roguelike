@@ -12,8 +12,11 @@ public:
 
 	}
 	void OnGameStarted() override {
-		CHAR_INFO symb = { u' ', COLOR::BG_BLUE };
-		SetSymbol(25, 25, symb);
+		CHAR_INFO white = { u' ', COLOR::BG_WHITE };
+		CHAR_INFO red = { u' ', COLOR::BG_RED };
+		FillRect(0, 0, 50, 10, white);
+		FillRect(0, 10, 50, 10, red);
+		FillRect(0, 20, 50, 10, white);
 	}
 	// Update is called once every frame
 	void Update() override {
