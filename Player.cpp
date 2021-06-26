@@ -7,7 +7,7 @@ Player::Player(float x, float y, float angle) {
 	m_angle = angle;
 }
 
-const float Player::FOV = 3.141592 / 4.0;
+const float Player::FOV = 3.141592 / 3.0;
 const float Player::ViewDistance = 16.0f;
 const float Player::Speed = 8.0f;
 

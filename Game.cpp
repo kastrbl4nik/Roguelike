@@ -87,10 +87,25 @@ void Game::Update() {
 		for (int y = 0; y < m_screenHeight; y++) {
 			if (y < distToCeiling)
 				SetSymbol(x, y, { ' ', COLOR::BG_BLUE });
-			else if (y >= distToCeiling && y <= distToFloor)
+			else if (y > distToCeiling && y <= distToFloor)
 				SetSymbol(x, y, shadedWall);
-			else
-				SetSymbol(x, y, { ' ', COLOR::BG_GREEN });
+			else {
+				float brightness = 1.0f - (((float)y - m_screenHeight / 2.0f) / ((float)m_screenHeight / 2.0f));
+				CHAR_INFO shadedFloor;
+
+				if (brightness < 0.25f)
+					shadedFloor = { ' ', BG_GREEN };
+				else if (brightness < 0.5f)
+					shadedFloor = { u'\u2591', BG_GREEN | FG_BLUE };
+				else if (brightness < 0.7f)
+					shadedFloor = { u'\u2592', BG_GREEN | FG_BLUE };
+				else if (brightness < 0.9f)
+					shadedFloor = { u'\u2593', BG_GREEN | FG_BLUE };
+				else
+					shadedFloor = { ' ', BG_BLUE };
+
+				SetSymbol(x, y, shadedFloor);
+			}
 		}
 	}
 }
