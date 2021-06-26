@@ -3,26 +3,21 @@
 #define GAME_H
 
 #include "Engine.h"
+#include "Player.h"
 
 
 class Game : public Engine {
 private:
+	Player* m_player;
+	std::wstring m_map;
+	int m_mapWidth;
+	int m_mapHeight;
 public:
-	Game() : Engine(50, 30, 8) {
+	Game();
 
-	}
-	void OnGameStarted() override {
-		CHAR_INFO white = { u' ', COLOR::BG_WHITE };
-		CHAR_INFO red = { u' ', COLOR::BG_RED };
-		FillRect(0, 0, 50, 10, white);
-		FillRect(0, 10, 50, 10, red);
-		FillRect(0, 20, 50, 10, white);
-	}
-	// Update is called once every frame
-	void Update() override {
-		
-	}
+	void OnGameStarted() override;
+	void Update() override;				// Update is called once every frame
 };
 
 
-#endif GAME_H
+#endif GAME_H // !GAME_H
