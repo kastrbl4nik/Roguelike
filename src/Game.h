@@ -14,9 +14,10 @@ private:
 	int m_mapHeight;
 public:
 	Game();
+	~Game();
 
 	void OnGameStarted() override;
-	void Update() override;				// Update is called once every frame
+	void Update() override;
 };
 
 

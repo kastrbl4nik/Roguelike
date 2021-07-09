@@ -24,6 +24,10 @@ Game::Game() : Engine(200, 120, 2) {
 	m_map += L"################";
 }
 
+Game::~Game()
+{
+}
+
 void Game::OnGameStarted() {
 }
 void Game::Update() {
@@ -78,11 +82,11 @@ void Game::Update() {
 
 		CHAR_INFO shadedWall;
 
-		if (distToWall <= Player::ViewDistance / 4.0f) shadedWall = { ' ', BG_WHITE };
-		else if (distToWall < Player::ViewDistance / 3.0f) shadedWall = { u'\u2591', BG_WHITE | FG_BLUE };
-		else if (distToWall < Player::ViewDistance / 2.0f) shadedWall = { u'\u2592', BG_WHITE | FG_BLUE };
-		else if (distToWall < Player::ViewDistance) shadedWall = { u'\u2593', BG_WHITE | FG_BLUE };
-		else shadedWall = { ' ', BG_BLUE };
+		if (distToWall <= Player::ViewDistance / 4.0f) shadedWall		= { ' ', BG_WHITE };
+		else if (distToWall < Player::ViewDistance / 3.0f) shadedWall	= { u'\u2591', BG_WHITE | FG_BLUE };
+		else if (distToWall < Player::ViewDistance / 2.0f) shadedWall	= { u'\u2592', BG_WHITE | FG_BLUE };
+		else if (distToWall < Player::ViewDistance) shadedWall			= { u'\u2593', BG_WHITE | FG_BLUE };
+		else shadedWall													= { ' ', BG_BLUE };
 
 		for (int y = 0; y < m_screenHeight; y++) {
 			if (y < distToCeiling)

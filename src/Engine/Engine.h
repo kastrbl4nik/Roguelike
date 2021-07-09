@@ -2,6 +2,14 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
+#ifndef UNICODE
+	#error Enable unicode for your compiler
+#endif
+
+#ifndef RL_PLATFORM_WINDOWS
+	#error This application only supports Windows!
+#endif
+
 #include <Windows.h>
 #include <WinUser.h>
 #include <thread>
@@ -53,11 +61,12 @@ private:
 
 public:
 	Engine(int screenWidth, int screenHeight, int fontSize);
-	~Engine();
+	virtual ~Engine();
 
 	void Start();
 
-	virtual void Update() = 0;
+	virtual void Update() = 0;                 // Update is called once every frame
+	                                           // TODO: FixedUpdate()
 	virtual void OnGameStarted() = 0;
 
 	void SetName(std::wstring title);
