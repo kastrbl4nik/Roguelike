@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <fstream>
 
-Game::Game(const char* map) : Engine(200, 120, 2) {
+Game::Game(const char* map) : Engine(100, 60, 8) {
 
 	std::wifstream levelData(map);
 	ASSERT(levelData);				// Map file wasn't open
@@ -14,9 +14,7 @@ Game::Game(const char* map) : Engine(200, 120, 2) {
 
 	while (levelData >> line)
 	{
-		m_map += line;
 		y++;
-
 		if (!playerFound)
 		{
 			size_t foundPos = line.find(L'P');
@@ -25,15 +23,17 @@ Game::Game(const char* map) : Engine(200, 120, 2) {
 				playerFound = true;
 				playerX = foundPos;
 				playerY = y;
+				line.replace(foundPos, 1, L"_");
 			}
 		}
+		m_map += line;
 	}
 	m_mapWidth = line.length();
 	m_mapHeight = y;
 
 	ASSERT(playerFound) // Player not found, try adding 'P' symbol inside your map, where player should be spawned
 
-	m_player = new Player(playerX, playerY, 0);
+	m_player = std::make_unique<Player>(playerX, playerY, 0);
 }
 
 Game::~Game()
@@ -42,11 +42,12 @@ Game::~Game()
 
 void Game::OnGameStarted() {
 }
+
 void Game::Update() {
 
 	// Look Around
 	if(abs(m_mouse.horizontalAxis) > 1)
-		m_player->IncrementAngle(m_mouse.horizontalAxis * m_deltaTime / 10.0f);
+		m_player->IncrementAngle(m_mouse.horizontalAxis * m_deltaTime / 5.0f);
 
 	// Walk
 	float deltaMove = m_deltaTime * Player::Speed;
@@ -123,5 +124,18 @@ void Game::Update() {
 				SetSymbol(x, y, shadedFloor);
 			}
 		}
+
+		for (int y = 0; y < m_mapHeight; y++) 
+		{
+			for (int x = 0; x < m_mapWidth; x++)
+			{
+				if(m_map[x + y * m_mapWidth] == L'#')
+					SetSymbol(x, y, { L' ',  COLOR::BG_CYAN });
+				else
+					SetSymbol(x, y, { L' ',  COLOR::BG_BLACK });
+			}
+		}
+
+		SetSymbol(m_player->GetX(), m_player->GetY(), { u'\u25A0',  COLOR::BG_BLACK | COLOR::FG_DARK_MAGENTA });
 	}
 }

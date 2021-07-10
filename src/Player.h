@@ -13,11 +13,13 @@ public:
 	static const float Speed;
 
 	Player(float x, float y, float angle);
-	float GetX();
-	float GetY();
-	float GetAngle();
-	void IncrementAngle(float deltaAngle);
+	~Player();
 
+	inline float Player::GetY()     const { return m_yPosition; }
+	inline float Player::GetAngle() const { return m_angle; }
+	inline float Player::GetX()     const { return m_xPosition; }
+
+	void IncrementAngle(float deltaAngle);
 	void Walk(float magnitude, int inputX, int inputY);
 };
 

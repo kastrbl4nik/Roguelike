@@ -10,7 +10,7 @@
 
 class Game : public Engine {
 private:
-	Player* m_player;
+	std::unique_ptr<Player> m_player;
 	std::wstring m_map;
 	int m_mapWidth;
 	int m_mapHeight;
