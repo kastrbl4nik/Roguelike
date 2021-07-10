@@ -1,27 +1,39 @@
 #include "Game.h"
+#include <fstream>
 
-Game::Game() : Engine(200, 120, 2) {
-	m_player = new Player(8, 8, 0);
+Game::Game(const char* map) : Engine(200, 120, 2) {
 
-	m_mapWidth = 16;
-	m_mapHeight = 16;
+	std::wifstream levelData(map);
+	ASSERT(levelData);				// Map file wasn't open
+	
+	std::wstring line;
 
-	m_map += L"################";
-	m_map += L"#              #";
-	m_map += L"#              #";
-	m_map += L"#######        #";
-	m_map += L"#     #        #";
-	m_map += L"#     #        #";
-	m_map += L"#              #";
-	m_map += L"#######        #";
-	m_map += L"#              #";
-	m_map += L"#              #";
-	m_map += L"#              #";
-	m_map += L"#              #";
-	m_map += L"#              #";
-	m_map += L"#  #   #   #   #";
-	m_map += L"#              #";
-	m_map += L"################";
+	int y = 0;
+	bool playerFound = false;
+	int playerX, playerY;
+
+	while (levelData >> line)
+	{
+		m_map += line;
+		y++;
+
+		if (!playerFound)
+		{
+			size_t foundPos = line.find(L'P');
+			if (foundPos != std::wstring::npos)
+			{
+				playerFound = true;
+				playerX = foundPos;
+				playerY = y;
+			}
+		}
+	}
+	m_mapWidth = line.length();
+	m_mapHeight = y;
+
+	ASSERT(playerFound) // Player not found, try adding 'P' symbol inside your map, where player should be spawned
+
+	m_player = new Player(playerX, playerY, 0);
 }
 
 Game::~Game()

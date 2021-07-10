@@ -2,6 +2,8 @@
 #ifndef GAME_H
 #define GAME_H
 
+#define ASSERT(x) if (!(x)) __debugbreak();
+
 #include "Engine.h"
 #include "Player.h"
 
@@ -13,7 +15,7 @@ private:
 	int m_mapWidth;
 	int m_mapHeight;
 public:
-	Game();
+	Game(const char* map);
 	~Game();
 
 	void OnGameStarted() override;

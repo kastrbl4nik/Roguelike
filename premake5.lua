@@ -40,6 +40,11 @@ project "Roguelike"
 			"RL_PLATFORM_WINDOWS"
 		}
 
+		postbuildcommands
+		{
+			("{COPY} res/ bin/" .. outputdir .. "/Roguelike/res/")
+		}
+
 	filter "configurations:Debug"
 		defines "RL_DEBUG"
 		symbols "On"
